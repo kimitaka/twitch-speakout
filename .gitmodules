@@ -1,0 +1,3 @@
+[submodule "guessLanguage.js"]
+	path = guessLanguage.js
+	url = https://github.com/richtr/guessLanguage.js.git
