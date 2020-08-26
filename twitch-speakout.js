@@ -1,4 +1,6 @@
+var speechLanguage = 'ja-JP'; // Default Language
 window.addEventListener('message', function(e) {
+    speechLanguage = 'ja-JP'; // Default Language
     const data = e.data || {};
     if (data.type !== 'item')
       return;
@@ -7,8 +9,11 @@ window.addEventListener('message', function(e) {
     
     const synth = window.speechSynthesis;
     if (obj.detail.command === 'PRIVMSG') {
+        guessLanguage.detect(obj.detail.body, function(language) {
+            if (language == 'en') { speechLanguage = 'en-US'; }
+        });
       var utter = new SpeechSynthesisUtterance(obj.detail.body);
-      utter.voice = synth.getVoices().filter(v => v.lang === 'ja-JP')[0];
+      utter.voice = synth.getVoices().filter(v => v.lang === speechLanguage)[0];
       utter.rate = 1;
       utter.pitch = 1;
       synth.speak(utter);
